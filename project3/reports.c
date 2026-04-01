@@ -1,5 +1,6 @@
 #include "reports.h"
 #include <math.h>
+#include <string.h>
 
 void generate_class_report(const StudentList *list)
 {
@@ -27,7 +28,8 @@ void generate_class_report(const StudentList *list)
     // Simple median (for even count, average of middle two)
     Student temp_list[MAX_STUDENTS];
     memcpy(temp_list, list->students, list->count * sizeof(Student));
-    sort_students_by_gpa((StudentList *)temp_list); // cast away const for sorting temp copy
+    StudentList temp = {temp_list, list->count, list->capacity};
+    sort_students_by_gpa(&temp); // sort the temp copy
 
     float median;
     if (list->count % 2 == 0)
